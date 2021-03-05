@@ -1,9 +1,5 @@
-import { FormatWidth } from "@angular/common";
 import { Component, Inject, Input, OnInit } from "@angular/core";
-import { FormArray, FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
-import { Observable, of } from "rxjs";
-import { filter, map, tap } from "rxjs/operators";
 import {
   IDriverSurvey,
   IMinMaxQuestion,
