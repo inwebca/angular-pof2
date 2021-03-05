@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { FormArray, FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import {
-  IChoice,
   IDriverSurvey,
   IMinMaxQuestion,
   IMultipleChoiceQuestion,
@@ -21,29 +20,7 @@ export class SurveyStepperComponent implements OnInit {
   readonly ControlType = ControlType;
   constructor(private fb: FormBuilder) {}
 
-  get minMax() {
-    return this.formGroup.get("minMax") as FormGroup;
-  }
-
-  get multipleChoice() {
-    return this.formGroup.get("multipleChoice") as FormGroup;
-  }
-
-  get multipleNestedChoice() {
-    return this.formGroup.get("multipleNestedChoice") as FormGroup;
-  }
-
-  get form() {
-    return this.formGroup.get("form") as FormArray;
-  }
-  get minMaxArray() {
-    return this.formGroup.get("minMaxArray") as FormArray;
-  }
-  get multipleChoicesArray() {
-    return this.formGroup.get("multipleChoicesArray") as FormArray;
-  }
-
-  getGroup(questionId) {
+  getGroup(questionId: number) {
     return this.formGroup.controls[questionId] as FormGroup;
   }
 
@@ -60,49 +37,8 @@ export class SurveyStepperComponent implements OnInit {
     let groups = this.createFormGroup(this.data.questions);
     this.formGroup = new FormGroup(groups);
 
-    this.data.questions.forEach(question => {
-      const typeName = this.getType(question);
-
-      // switch (typeName) {
-      //   case "minMax": {
-      //     const minMaxQuestion = question as IMinMaxQuestion;
-      //     this.formGroup.addControl(
-      //       "minMax",
-      //       this.fb.group({
-      //         min: [minMaxQuestion.choosedMin],
-      //         max: [minMaxQuestion.choosedMax]
-      //       })
-      //     );
-      //     break;
-      //   }
-      //   case "multipleChoice": {
-      //     const multipleChoiceQuestion = question as IMultipleChoiceQuestion;
-      //     this.formGroup.addControl(
-      //       "multipleChoice",
-      //       this.fb.group({
-      //         values: [multipleChoiceQuestion.values],
-      //         choices: [multipleChoiceQuestion.choices]
-      //       })
-      //     );
-      //     break;
-      //   }
-      //   case "multipleNestedChoice": {
-      //     const multipleNestedChoiceQuestion = question as IMultipleNestedChoiceQuestion;
-      //     this.formGroup.addControl(
-      //       "multipleNestedChoice",
-      //       this.fb.group({
-      //         values: [multipleNestedChoiceQuestion.values],
-      //         choices: [multipleNestedChoiceQuestion.choices]
-      //       })
-      //     );
-      //     break;
-      //   }
-      //   default: {
-      //     //statements;
-      //     break;
-      //   }
-      // }
-    });
+    const test = this.formGroup.controls;
+    console.log(test[1]);
   }
 
   getType(question: IQuestion) {
