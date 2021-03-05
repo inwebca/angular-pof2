@@ -56,7 +56,30 @@ export class SurveyService {
               name: "Canada"
             }
           ]
-        } as IMultipleChoiceQuestion
+        } as IMultipleChoiceQuestion,
+        {
+          id: 3,
+          displayName: "Question 3",
+          choices: [],
+          values: [
+            {
+              value: 1,
+              name: "EastCoast",
+              children: [
+                { value: 1, name: "New York" },
+                { value: 2, name: "New Jersey" }
+              ]
+            },
+            {
+              value: 2,
+              name: "SouthWest",
+              children: [
+                { value: 1, name: "California" },
+                { value: 2, name: "Arizona" }
+              ]
+            }
+          ]
+        } as IMultipleNestedChoiceQuestion
       ]
     };
 
@@ -97,7 +120,20 @@ export interface IMultipleChoiceQuestion extends IQuestion {
   values: Array<IChoice>;
 }
 
+export interface IMultipleNestedChoiceQuestion extends IQuestion {
+  id: number;
+  displayName: string;
+  choices: Array<number>;
+  values: Array<INestedChoice>;
+}
+
 export interface IChoice {
   value: number;
   name: string;
+}
+
+export interface INestedChoice {
+  value: number;
+  name: string;
+  children: Array<INestedChoice>;
 }

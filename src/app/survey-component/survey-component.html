@@ -1,13 +1,12 @@
 <mat-card *ngFor="let survey of driverSurveys$ | async">
-  <mat-card-title>Survey</mat-card-title>
-  <mat-card-content>
-    <div>start date : {{survey.startDate}}</div>
-    <div>end date : {{survey.endDate}}</div>
-  </mat-card-content>
-  <mat-card-actions>
-    <button mat-raised-button color="primary" (click)="onClick(survey.id)">
+	<mat-card-title>Survey</mat-card-title>
+	<mat-card-content>
+		<div>start date : {{survey.startDate}}</div>
+		<div>end date : {{survey.endDate}}</div>
+	</mat-card-content>
+	<mat-card-actions>
+		<button mat-raised-button color="primary" (click)="onClick(survey.id)">
       View survey
     </button>
-  </mat-card-actions>
-  <mat-divider></mat-divider>
+	</mat-card-actions>
 </mat-card>
