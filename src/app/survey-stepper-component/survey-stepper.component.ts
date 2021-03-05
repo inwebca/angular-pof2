@@ -3,7 +3,8 @@ import { FormBuilder, FormGroup } from "@angular/forms";
 import {
   IDriverSurvey,
   IMinMaxQuestion,
-  IMultipleChoiceQuestion
+  IMultipleChoiceQuestion,
+  IMultipleNestedChoiceQuestion
 } from "../services/survey.service";
 
 @Component({
@@ -67,6 +68,13 @@ export class SurveyStepperComponent implements OnInit {
   }
 
   isMultipleChoice(object: any): object is IMultipleChoiceQuestion {
+    if ("values" in object) {
+      debugger;
+    }
+    return "choices" in object;
+  }
+
+  isMultipleNestedChoice(object: any): object is IMultipleNestedChoiceQuestion {
     return "choices" in object;
   }
 }
