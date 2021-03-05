@@ -37,12 +37,11 @@ export class SurveyStepperComponent implements OnInit {
         } as Step)
     );
 
-    console.log(this.steps);
-
     this.formGroup = this.fb.group({});
 
     this.data.questions.forEach(question => {
       const typeName = this.getType(question);
+
       switch (typeName) {
         case "minMax": {
           const minMaxQuestion = question as IMinMaxQuestion;
@@ -82,24 +81,6 @@ export class SurveyStepperComponent implements OnInit {
           break;
         }
       }
-      // if (this.isMinMax(question)) {
-      //   this.formGroup.addControl(
-      //     "minMax",
-      //     this.fb.group({
-      //       min: [question.choosedMin],
-      //       max: [question.choosedMax]
-      //     })
-      //   );
-      // }
-      // if (this.isMultipleChoice(question)) {
-      //   this.formGroup.addControl(
-      //     "multipleChoice",
-      //     this.fb.group({
-      //       values: [question.values],
-      //       choices: [question.choices]
-      //     })
-      //   );
-      // }
     });
   }
 
