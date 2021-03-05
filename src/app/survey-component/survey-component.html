@@ -1,6 +1,8 @@
 <div *ngFor="let survey of driverSurveys$ | async">
-	<h2>Survey:</h2>
-	<div>start date : {{survey.startDate}}</div>
-	<div>end date : {{survey.endDate}}</div>
-	<button (click)="onClick(survey.id)">See details</button>
+  <h2>Survey:</h2>
+  <div>start date : {{survey.startDate}}</div>
+  <div>end date : {{survey.endDate}}</div>
+  <button mat-raised-button color="primary" (click)="onClick(survey.id)">
+    View survey
+  </button>
 </div>
