@@ -15,7 +15,7 @@ import { SurveyComponent } from "./survey-component/survey.component";
 import { MultipleChoiceComponent } from "./multiple-choice-component/multiple-choice.component";
 import { MinMaxComponent } from "./min-max-component/min-max.component";
 import { SurveyDialogComponent } from "./survey-dialog-component/survey-dialog.component";
-import { StepperComponent } from "./stepper-component/stepper.component";
+import { SurveyStepperComponent } from "./survey-stepper-component/survey-stepper.component";
 
 @NgModule({
   imports: [
@@ -36,7 +36,7 @@ import { StepperComponent } from "./stepper-component/stepper.component";
     MultipleChoiceComponent,
     MinMaxComponent,
     SurveyDialogComponent,
-    StepperComponent
+    SurveyStepperComponent
   ],
   bootstrap: [AppComponent]
 })
