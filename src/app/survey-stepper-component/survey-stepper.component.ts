@@ -42,28 +42,22 @@ export class SurveyStepperComponent implements OnInit {
     return this.formGroup.get("multipleChoicesArray") as FormArray;
   }
 
-  getGroup(i) {
-    debugger;
-    this.formGroup[i] as FormGroup;
-    return this.formGroup[i] as FormGroup;
+  getGroup(questionId) {
+    return this.formGroup.controls[questionId] as FormGroup;
   }
 
   ngOnInit() {
     this.steps = this.data.questions.map(
       question =>
         ({
+          questionId: question.id,
           name: question.displayName,
           kind: this.getType(question)
         } as Step)
     );
 
-    this.formGroup = this.fb.group({
-      // minMaxArray: this.fb.array([]),
-      // multipleChoicesArray: this.fb.array([])
-    });
-
     let groups = this.createFormGroup(this.data.questions);
-    console.log(groups);
+    this.formGroup = new FormGroup(groups);
 
     this.data.questions.forEach(question => {
       const typeName = this.getType(question);
@@ -163,6 +157,7 @@ export class SurveyStepperComponent implements OnInit {
 }
 
 export class Step {
+  questionId: number;
   name: string;
   kind: string;
 }

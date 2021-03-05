@@ -1,24 +1,24 @@
 <form [formGroup]="formGroup">
-	<mat-horizontal-stepper #stepper>
-		<mat-step *ngFor="let step of steps; let i = index;" [ngSwitch]="step.kind">
-			<ng-template matStepLabel>{{i+1}}</ng-template>
-			<min-max-component *ngSwitchCase="'minMax'" [group]="getGroup(i)" [question]="step.name">
-			</min-max-component>
-			<!-- <multiple-choice-component *ngSwitchCase="'multipleChoice'" [group]="multipleChoice" [question]="step.name">
+  <mat-horizontal-stepper #stepper>
+    <mat-step *ngFor="let step of steps; let i = index;" [ngSwitch]="step.kind">
+      <ng-template matStepLabel>{{i+1}}</ng-template>
+      <min-max-component *ngSwitchCase="'minMax'" [group]="getGroup(step.questionId)" [question]="step.name">
+      </min-max-component>
+      <!-- <multiple-choice-component *ngSwitchCase="'multipleChoice'" [group]="multipleChoice" [question]="step.name">
 			</multiple-choice-component>
 			<multiple-nested-choice-component *ngSwitchCase="'multipleNestedChoice'" [group]="multipleNestedChoice"
 				[question]="step.name">
 			</multiple-nested-choice-component> -->
-		</mat-step>
-		<mat-step>
-			<ng-template matStepLabel>Done</ng-template>
-			<p>{{formGroup.value | json}}</p>
-			<div>
-				<button matStepperPrevious mat-raised-button color="primary">
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Done</ng-template>
+      <p>{{formGroup.value | json}}</p>
+      <div>
+        <button matStepperPrevious mat-raised-button color="primary">
           Back
         </button>
-				<button mat-button (click)="stepper.reset()">Reset</button>
-			</div>
-		</mat-step>
-	</mat-horizontal-stepper>
+        <button mat-button (click)="stepper.reset()">Reset</button>
+      </div>
+    </mat-step>
+  </mat-horizontal-stepper>
 </form>
