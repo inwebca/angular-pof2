@@ -84,8 +84,7 @@ export class SurveyStepperComponent implements OnInit {
     return "choices" in object;
   }
 
-  determineIfIsAnimalOrHuman(question: IQuestion) {
-    debugger;
+  checkType(question: IQuestion) {
     if ((question as IMinMaxQuestion).choosedMin !== undefined) {
       return "minMax";
     }
@@ -96,7 +95,7 @@ export class SurveyStepperComponent implements OnInit {
       let values = (question as
         | IMultipleChoiceQuestion
         | IMultipleNestedChoiceQuestion).values;
-      let choices = values as IChoice[] | INestedChoice[];
+
       let nestedChoices = values as INestedChoice[];
 
       if (nestedChoices[0].children !== undefined) {
