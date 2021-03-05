@@ -33,8 +33,7 @@ export class SurveyStepperComponent implements OnInit {
       question =>
         ({
           name: question.displayName,
-          kind: this.getType(question),
-          kind2: this.determineIfIsAnimalOrHuman(question)
+          kind: this.getType(question)
         } as Step)
     );
 
@@ -43,48 +42,68 @@ export class SurveyStepperComponent implements OnInit {
     this.formGroup = this.fb.group({});
 
     this.data.questions.forEach(question => {
-      if (this.isMinMax(question)) {
-        this.formGroup.addControl(
-          "minMax",
-          this.fb.group({
-            min: [question.choosedMin],
-            max: [question.choosedMax]
-          })
-        );
+      const typeName = this.getType(question);
+      switch (typeName) {
+        case "minMax": {
+          const minMaxQuestion = question as IMinMaxQuestion;
+          this.formGroup.addControl(
+            "minMax",
+            this.fb.group({
+              min: [minMaxQuestion.choosedMin],
+              max: [minMaxQuestion.choosedMax]
+            })
+          );
+          break;
+        }
+        case "multipleChoice": {
+          const multipleChoiceQuestion = question as IMultipleChoiceQuestion;
+          this.formGroup.addControl(
+            "multipleChoice",
+            this.fb.group({
+              values: [multipleChoiceQuestion.values],
+              choices: [multipleChoiceQuestion.choices]
+            })
+          );
+          break;
+        }
+        case "multipleNestedChoice": {
+          const multipleNestedChoiceQuestion = question as IMultipleNestedChoiceQuestion;
+          this.formGroup.addControl(
+            "multipleNestedChoice",
+            this.fb.group({
+              values: [multipleNestedChoiceQuestion.values],
+              choices: [multipleNestedChoiceQuestion.choices]
+            })
+          );
+          break;
+        }
+        default: {
+          //statements;
+          break;
+        }
       }
-      if (this.isMultipleChoice(question)) {
-        this.formGroup.addControl(
-          "multipleChoice",
-          this.fb.group({
-            values: [question.values],
-            choices: [question.choices]
-          })
-        );
-      }
+      // if (this.isMinMax(question)) {
+      //   this.formGroup.addControl(
+      //     "minMax",
+      //     this.fb.group({
+      //       min: [question.choosedMin],
+      //       max: [question.choosedMax]
+      //     })
+      //   );
+      // }
+      // if (this.isMultipleChoice(question)) {
+      //   this.formGroup.addControl(
+      //     "multipleChoice",
+      //     this.fb.group({
+      //       values: [question.values],
+      //       choices: [question.choices]
+      //     })
+      //   );
+      // }
     });
   }
 
-  getType(question): string {
-    if (this.isMinMax(question)) return "minMax";
-    if (this.isMultipleChoice(question)) return "multipleChoice";
-  }
-
-  isMinMax(object: any): object is IMinMaxQuestion {
-    return "choosedMin" in object;
-  }
-
-  isMultipleChoice(object: any): object is IMultipleChoiceQuestion {
-    if ("values" in object) {
-      return "values" in object;
-    }
-    return "choices" in object;
-  }
-
-  isMultipleNestedChoice(object: any): object is IMultipleNestedChoiceQuestion {
-    return "choices" in object;
-  }
-
-  checkType(question: IQuestion) {
+  getType(question: IQuestion) {
     if ((question as IMinMaxQuestion).choosedMin !== undefined) {
       return "minMax";
     }
