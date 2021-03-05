@@ -4,11 +4,12 @@
       <ng-template matStepLabel>{{i+1}}</ng-template>
       <min-max-component *ngSwitchCase="'minMax'" [group]="getGroup(step.questionId)" [question]="step.name">
       </min-max-component>
-      <!-- <multiple-choice-component *ngSwitchCase="'multipleChoice'" [group]="multipleChoice" [question]="step.name">
-			</multiple-choice-component>
-			<multiple-nested-choice-component *ngSwitchCase="'multipleNestedChoice'" [group]="multipleNestedChoice"
-				[question]="step.name">
-			</multiple-nested-choice-component> -->
+      <multiple-choice-component *ngSwitchCase="'multipleChoice'" [group]="getGroup(step.questionId)"
+        [question]="step.name">
+      </multiple-choice-component>
+      <multiple-nested-choice-component *ngSwitchCase="'multipleNestedChoice'" [group]="getGroup(step.questionId)"
+        [question]="step.name">
+      </multiple-nested-choice-component>
     </mat-step>
     <mat-step>
       <ng-template matStepLabel>Done</ng-template>
