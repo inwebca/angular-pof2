@@ -2,6 +2,7 @@ import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
+import { MatCardModule } from "@angular/material/card";
 import { MatButtonModule } from "@angular/material/button";
 import { MatSelectModule } from "@angular/material/select";
 import { MatCheckboxModule } from "@angular/material/checkbox";
@@ -30,7 +31,8 @@ import { SurveyStepperComponent } from "./survey-stepper-component/survey-steppe
     MatInputModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
-    MatButtonModule
+    MatButtonModule,
+    MatCardModule
   ],
   declarations: [
     AppComponent,
