@@ -1,1 +1,26 @@
-1111
+<form [formGroup]="formGroup">
+  <mat-horizontal-stepper #stepper>
+    <mat-step *ngFor="let step of steps; let i = index;" [ngSwitch]="step.kind">
+      <ng-template matStepLabel>{{i+1}}</ng-template>
+      <min-max-component
+        *ngSwitchCase="'minMax'"
+        [group]="minMax"
+        [question]="step.name"
+      ></min-max-component>
+      <multiple-choice-component
+        *ngSwitchCase="'multipleChoice'"
+        [group]="multipleChoice"
+        [question]="step.name"
+      >
+      </multiple-choice-component>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Done</ng-template>
+      <p>{{formGroup.value | json}}</p>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button (click)="stepper.reset()">Reset</button>
+      </div>
+    </mat-step>
+  </mat-horizontal-stepper>
+</form>

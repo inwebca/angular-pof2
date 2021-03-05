@@ -1,36 +1,7 @@
 <h1 mat-dialog-title>Survey</h1>
 <div mat-dialog-content>
   <p>Survey id: {{data.id}}</p>
-  <survey-stepper-component></survey-stepper-component>
-  <form [formGroup]="formGroup">
-    <mat-horizontal-stepper #stepper>
-      <mat-step
-        *ngFor="let step of steps; let i = index;"
-        [ngSwitch]="step.kind"
-      >
-        <ng-template matStepLabel>{{i+1}}</ng-template>
-        <min-max-component
-          *ngSwitchCase="'minMax'"
-          [group]="minMax"
-          [question]="step.name"
-        ></min-max-component>
-        <multiple-choice-component
-          *ngSwitchCase="'multipleChoice'"
-          [group]="multipleChoice"
-          [question]="step.name"
-        >
-        </multiple-choice-component>
-      </mat-step>
-      <mat-step>
-        <ng-template matStepLabel>Done</ng-template>
-        <p>{{formGroup.value | json}}</p>
-        <div>
-          <button mat-button matStepperPrevious>Back</button>
-          <button mat-button (click)="stepper.reset()">Reset</button>
-        </div>
-      </mat-step>
-    </mat-horizontal-stepper>
-  </form>
+  <survey-stepper-component [data]="data"></survey-stepper-component>
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onClose()">Close</button>
