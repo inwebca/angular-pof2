@@ -13,7 +13,7 @@
     </mat-step>
     <mat-step>
       <ng-template matStepLabel>Done</ng-template>
-      <p>{{formGroup.value | json}}</p>
+      <pre>{{formGroup.value | json}}</pre>
       <div>
         <button matStepperPrevious mat-raised-button color="primary">
           Back

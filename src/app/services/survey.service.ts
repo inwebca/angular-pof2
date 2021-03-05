@@ -50,7 +50,7 @@ export class SurveyService {
         } as IMinMaxQuestion,
         {
           id: 3,
-          displayName: "Question 2",
+          displayName: "Question multiple choice 1",
           choices: [1],
           values: [
             {
@@ -65,7 +65,22 @@ export class SurveyService {
         } as IMultipleChoiceQuestion,
         {
           id: 4,
-          displayName: "Question 3",
+          displayName: "Question multiple choice 2",
+          choices: [2],
+          values: [
+            {
+              value: 1,
+              name: "US"
+            },
+            {
+              value: 2,
+              name: "Canada"
+            }
+          ]
+        } as IMultipleChoiceQuestion,
+        {
+          id: 5,
+          displayName: "Question multiple nested choice 1",
           choices: [123, 789],
           values: [
             {
