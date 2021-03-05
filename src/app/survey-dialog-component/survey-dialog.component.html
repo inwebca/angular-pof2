@@ -3,6 +3,6 @@
   <p>Survey id: {{data.id}}</p>
   <survey-stepper-component [data]="data"></survey-stepper-component>
 </div>
-<div mat-dialog-actions>
-  <button mat-button (click)="onClose()">Close</button>
+<div mat-dialog-actions s align="end">
+  <button mat-button (click)="onClose()" cdkFocusInitial>Close</button>
 </div>

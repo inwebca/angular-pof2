@@ -18,7 +18,9 @@
       <ng-template matStepLabel>Done</ng-template>
       <p>{{formGroup.value | json}}</p>
       <div>
-        <button mat-button matStepperPrevious>Back</button>
+        <button matStepperPrevious mat-raised-button color="primary">
+          Back
+        </button>
         <button mat-button (click)="stepper.reset()">Reset</button>
       </div>
     </mat-step>
