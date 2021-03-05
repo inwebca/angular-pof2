@@ -1,7 +1,6 @@
 <div [formGroup]="group">
   {{question}}
   <br />
-
   <mat-select formControlName="choices" multiple>
     <mat-optgroup *ngFor="let group of values" [label]="group.name">
       <mat-option *ngFor="let children of group.children" [value]="children.value">
@@ -9,5 +8,4 @@
       </mat-option>
     </mat-optgroup>
   </mat-select>
-
 </div>

@@ -66,22 +66,22 @@ export class SurveyService {
         {
           id: 4,
           displayName: "Question 3",
-          choices: [],
+          choices: [123, 789],
           values: [
             {
               value: 1,
               name: "EastCoast",
               children: [
-                { value: 1, name: "New York" },
-                { value: 2, name: "New Jersey" }
+                { value: 123, name: "New York" },
+                { value: 456, name: "New Jersey" }
               ]
             },
             {
               value: 2,
               name: "SouthWest",
               children: [
-                { value: 1, name: "California" },
-                { value: 2, name: "Arizona" }
+                { value: 789, name: "California" },
+                { value: 999, name: "Arizona" }
               ]
             }
           ]
