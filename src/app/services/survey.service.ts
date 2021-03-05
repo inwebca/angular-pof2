@@ -38,12 +38,18 @@ export class SurveyService {
       questions: [
         {
           id: 1,
-          displayName: "Question 1",
+          displayName: "Question min max 1",
           choosedMin: 1,
           choosedMax: 2
         } as IMinMaxQuestion,
         {
           id: 2,
+          displayName: "Question min max 2",
+          choosedMin: 2,
+          choosedMax: 3
+        } as IMinMaxQuestion,
+        {
+          id: 3,
           displayName: "Question 2",
           choices: [1],
           values: [
@@ -58,7 +64,7 @@ export class SurveyService {
           ]
         } as IMultipleChoiceQuestion,
         {
-          id: 3,
+          id: 4,
           displayName: "Question 3",
           choices: [],
           values: [

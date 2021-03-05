@@ -12,7 +12,7 @@ export class MinMaxComponent implements OnInit {
   constructor(private fb: FormBuilder) {}
 
   ngOnInit() {
-    const test = this.group.get("values");
+    const test = this.group;
     console.log(test);
   }
 }

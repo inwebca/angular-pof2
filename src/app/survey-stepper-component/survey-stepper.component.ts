@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
+import { FormArray, FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import {
   IChoice,
   IDriverSurvey,
@@ -32,6 +32,22 @@ export class SurveyStepperComponent implements OnInit {
     return this.formGroup.get("multipleNestedChoice") as FormGroup;
   }
 
+  get form() {
+    return this.formGroup.get("form") as FormArray;
+  }
+  get minMaxArray() {
+    return this.formGroup.get("minMaxArray") as FormArray;
+  }
+  get multipleChoicesArray() {
+    return this.formGroup.get("multipleChoicesArray") as FormArray;
+  }
+
+  getGroup(i) {
+    debugger;
+    this.formGroup[i] as FormGroup;
+    return this.formGroup[i] as FormGroup;
+  }
+
   ngOnInit() {
     this.steps = this.data.questions.map(
       question =>
@@ -41,52 +57,57 @@ export class SurveyStepperComponent implements OnInit {
         } as Step)
     );
 
-    this.formGroup = this.fb.group({});
+    this.formGroup = this.fb.group({
+      // minMaxArray: this.fb.array([]),
+      // multipleChoicesArray: this.fb.array([])
+    });
+
+    let groups = this.createFormGroup(this.data.questions);
+    console.log(groups);
 
     this.data.questions.forEach(question => {
       const typeName = this.getType(question);
 
-      switch (typeName) {
-        case "minMax": {
-          const minMaxQuestion = question as IMinMaxQuestion;
-          this.formGroup.addControl(
-            "minMax",
-            this.fb.group({
-              min: [minMaxQuestion.choosedMin],
-              max: [minMaxQuestion.choosedMax]
-            })
-          );
-          break;
-        }
-        case "multipleChoice": {
-          const multipleChoiceQuestion = question as IMultipleChoiceQuestion;
-          this.formGroup.addControl(
-            "multipleChoice",
-            this.fb.group({
-              values: [multipleChoiceQuestion.values],
-              choices: [multipleChoiceQuestion.choices]
-            })
-          );
-          break;
-        }
-        case "multipleNestedChoice": {
-          const multipleNestedChoiceQuestion = question as IMultipleNestedChoiceQuestion;
-          this.formGroup.addControl(
-            "multipleNestedChoice",
-            this.fb.group({
-              values: [multipleNestedChoiceQuestion.values],
-              choices: [multipleNestedChoiceQuestion.choices]
-            })
-          );
-          break;
-        }
-        default: {
-          //statements;
-          break;
-        }
-      }
+      // switch (typeName) {
+      //   case "minMax": {
+      //     const minMaxQuestion = question as IMinMaxQuestion;
+      //     this.formGroup.addControl(
+      //       "minMax",
+      //       this.fb.group({
+      //         min: [minMaxQuestion.choosedMin],
+      //         max: [minMaxQuestion.choosedMax]
+      //       })
+      //     );
+      //     break;
+      //   }
+      //   case "multipleChoice": {
+      //     const multipleChoiceQuestion = question as IMultipleChoiceQuestion;
+      //     this.formGroup.addControl(
+      //       "multipleChoice",
+      //       this.fb.group({
+      //         values: [multipleChoiceQuestion.values],
+      //         choices: [multipleChoiceQuestion.choices]
+      //       })
+      //     );
+      //     break;
+      //   }
+      //   case "multipleNestedChoice": {
+      //     const multipleNestedChoiceQuestion = question as IMultipleNestedChoiceQuestion;
+      //     this.formGroup.addControl(
+      //       "multipleNestedChoice",
+      //       this.fb.group({
+      //         values: [multipleNestedChoiceQuestion.values],
+      //         choices: [multipleNestedChoiceQuestion.choices]
+      //       })
+      //     );
+      //     break;
+      //   }
+      //   default: {
+      //     //statements;
+      //     break;
+      //   }
+      // }
     });
-    console.log(this.formGroup);
   }
 
   getType(question: IQuestion) {
@@ -108,6 +129,36 @@ export class SurveyStepperComponent implements OnInit {
       }
       return "multipleChoice";
     }
+  }
+
+  createFormGroup(questions: IQuestion[]) {
+    const group: any = {};
+
+    questions.forEach(question => {
+      const typeName = this.getType(question);
+      if (typeName === "minMax") {
+        const minMaxQuestion = question as IMinMaxQuestion;
+        group[question.id] = this.fb.group({
+          min: minMaxQuestion.choosedMin,
+          max: minMaxQuestion.choosedMax
+        });
+      }
+      if (typeName === "multipleChoice") {
+        const multipleChoiceQuestion = question as IMultipleChoiceQuestion;
+        group[question.id] = this.fb.group({
+          values: [multipleChoiceQuestion.values],
+          choices: [multipleChoiceQuestion.choices]
+        });
+      }
+      if (typeName === "multipleNestedChoice") {
+        const multipleNestedChoiceQuestion = question as IMultipleNestedChoiceQuestion;
+        group[question.id] = this.fb.group({
+          values: [multipleNestedChoiceQuestion.values],
+          choices: [multipleNestedChoiceQuestion.choices]
+        });
+      }
+    });
+    return group;
   }
 }
 
