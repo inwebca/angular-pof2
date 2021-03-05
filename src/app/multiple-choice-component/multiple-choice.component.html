@@ -1,5 +1,5 @@
 <div [formGroup]="group">
-	{{question.displayName}}
+	{{question}}
 	<br>
 	<mat-select formControlName="choices" multiple>
 		<mat-option *ngFor="let item of values" [value]="item.value">

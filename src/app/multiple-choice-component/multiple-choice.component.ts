@@ -8,7 +8,7 @@ import { IQuestion } from "../services/survey.service";
 })
 export class MultipleChoiceComponent implements OnInit {
   @Input() group: FormGroup;
-  @Input() question: IQuestion;
+  @Input() question: string;
 
   get values() {
     return this.group.get("values").value;

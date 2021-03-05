@@ -7,7 +7,7 @@ import { IQuestion } from "../services/survey.service";
 })
 export class MinMaxComponent implements OnInit {
   @Input() group: FormGroup;
-  @Input() question: IQuestion;
+  @Input() question: string;
 
   constructor(private fb: FormBuilder) {}
 
