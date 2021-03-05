@@ -1,0 +1,10 @@
+<div [formGroup]="group">
+	{{question.displayName}}
+	<br>
+	<mat-select formControlName="choices" multiple>
+		<mat-option *ngFor="let item of values" [value]="item.value">
+			{{item.name}}
+		</mat-option>
+	</mat-select>
+
+</div>

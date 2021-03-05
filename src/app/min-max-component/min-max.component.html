@@ -1,0 +1,12 @@
+<div [formGroup]="group">
+	{{question.displayName}}
+	<br>
+	<mat-form-field>
+		<mat-label>min</mat-label>
+		<input matInput formControlName="min">
+</mat-form-field>
+		<mat-form-field>
+			<mat-label>max</mat-label>
+			<input matInput formControlName="max">
+</mat-form-field>
+</div>
