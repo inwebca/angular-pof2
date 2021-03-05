@@ -1,13 +1,12 @@
 <h1 mat-dialog-title>Survey</h1>
 <div mat-dialog-content>
   <p>Survey id: {{data.id}}</p>
-
+  <stepper-compnent></stepper-compnent>
   <form [formGroup]="formGroup">
     <mat-horizontal-stepper #stepper>
       <mat-step
         *ngFor="let step of steps; let i = index;"
         [ngSwitch]="step.kind"
-        formGroupName="step.kind"
       >
         <ng-template matStepLabel>{{i+1}}</ng-template>
         <min-max-component
@@ -22,22 +21,6 @@
         >
         </multiple-choice-component>
       </mat-step>
-
-      <!-- <div *ngFor="let question of data.questions;let i=index;">
-				<div *ngIf="isMinMax(question)">
-					<mat-step formGroupName="minMax">
-						<ng-template matStepLabel>{{i+1}}</ng-template>
-						<min-max-component [group]="minMax" [question]="question"></min-max-component>
-					</mat-step>
-				</div>
-				<div *ngIf="isMultipleChoice(question)">
-					<mat-step formGroupName="multipleChoice">
-						<ng-template matStepLabel>{{i+1}}</ng-template>
-						<multiple-choice-component [group]="multipleChoice" [question]="question">
-						</multiple-choice-component>
-					</mat-step>
-				</div>
-			</div> -->
       <mat-step>
         <ng-template matStepLabel>Done</ng-template>
         <p>{{formGroup.value | json}}</p>
