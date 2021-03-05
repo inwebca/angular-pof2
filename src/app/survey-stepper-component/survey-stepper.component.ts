@@ -16,6 +16,7 @@ import {
 export class SurveyStepperComponent implements OnInit {
   @Input() data: IDriverSurvey;
   formGroup: FormGroup;
+  formChoices: DriverSurveyChoices;
   steps: Step[];
   readonly ControlType = ControlType;
   constructor(private fb: FormBuilder) {}
@@ -25,6 +26,11 @@ export class SurveyStepperComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.formChoices = {
+      id: this.data.id,
+      minMaxChoices: [],
+      multipleChoices: []
+    };
     this.steps = this.data.questions.map(
       question =>
         ({
@@ -37,8 +43,23 @@ export class SurveyStepperComponent implements OnInit {
     let groups = this.createFormGroup(this.data.questions);
     this.formGroup = new FormGroup(groups);
 
-    const test = this.formGroup.controls;
-    console.log(test[1]);
+    Object.keys(this.formGroup.controls).forEach(key => {
+      const group = this.formGroup.controls[key] as FormGroup;
+      if (group.contains("min")) {
+        this.formChoices.minMaxChoices.push({
+          id: parseInt(key),
+          min: group.get("min").value,
+          max: group.get("max").value
+        });
+      }
+      if (group.contains("choices")) {
+        this.formChoices.multipleChoices.push({
+          id: parseInt(key),
+          choice: group.get("choices").value
+        });
+      }
+    });
+    console.log(this.formChoices);
   }
 
   getType(question: IQuestion) {
@@ -94,6 +115,23 @@ export class SurveyStepperComponent implements OnInit {
     });
     return group;
   }
+}
+
+export interface DriverSurveyChoices {
+  id: number;
+  multipleChoices: Array<MultipleChoice>;
+  minMaxChoices: Array<MinMaxChoice>;
+}
+
+export interface MultipleChoice {
+  id: number;
+  choice: Array<number>;
+}
+
+export interface MinMaxChoice {
+  id: number;
+  min: number;
+  max: number;
 }
 
 export class Step {

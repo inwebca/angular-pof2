@@ -15,13 +15,5 @@ export class MultipleNestedChoiceComponent implements OnInit {
     return this.group.get("values").value;
   }
 
-  ngOnInit() {
-    for (let group of this.values) {
-      this.groups.push(group);
-      for (let item of group.children) {
-        this.items.push(item.value);
-      }
-    }
-    console.log(this.values);
-  }
+  ngOnInit() {}
 }
