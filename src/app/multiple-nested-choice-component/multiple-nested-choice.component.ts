@@ -8,10 +8,20 @@ import { FormGroup } from "@angular/forms";
 export class MultipleNestedChoiceComponent implements OnInit {
   @Input() group: FormGroup;
   @Input() question: string;
+  groups: any[] = [];
+  items: any[] = [];
 
   get values() {
     return this.group.get("values").value;
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    for (let group of this.values) {
+      this.groups.push(group);
+      for (let item of group.children) {
+        this.items.push(item.value);
+      }
+    }
+    console.log(this.values);
+  }
 }
