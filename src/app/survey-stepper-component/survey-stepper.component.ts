@@ -18,6 +18,7 @@ export class SurveyStepperComponent implements OnInit {
   @Input() data: IDriverSurvey;
   formGroup: FormGroup;
   steps: Step[];
+  readonly ControlType = ControlType;
   constructor(private fb: FormBuilder) {}
 
   get minMax() {
@@ -52,7 +53,7 @@ export class SurveyStepperComponent implements OnInit {
         ({
           questionId: question.id,
           name: question.displayName,
-          kind: this.getType(question)
+          controlType: this.getType(question)
         } as Step)
     );
 
@@ -106,7 +107,7 @@ export class SurveyStepperComponent implements OnInit {
 
   getType(question: IQuestion) {
     if ((question as IMinMaxQuestion).choosedMin !== undefined) {
-      return "minMax";
+      return ControlType.MinMax;
     }
     if (
       (question as IMultipleChoiceQuestion | IMultipleNestedChoiceQuestion)
@@ -119,37 +120,40 @@ export class SurveyStepperComponent implements OnInit {
       let nestedChoices = values as INestedChoice[];
 
       if (nestedChoices[0].children !== undefined) {
-        return "multipleNestedChoice";
+        return ControlType.MultipleNestedChoice;
       }
-      return "multipleChoice";
+      return ControlType.MultipleChoice;
     }
   }
 
   createFormGroup(questions: IQuestion[]) {
     const group: any = {};
-
     questions.forEach(question => {
-      const typeName = this.getType(question);
-      if (typeName === "minMax") {
-        const minMaxQuestion = question as IMinMaxQuestion;
-        group[question.id] = this.fb.group({
-          min: minMaxQuestion.choosedMin,
-          max: minMaxQuestion.choosedMax
-        });
-      }
-      if (typeName === "multipleChoice") {
-        const multipleChoiceQuestion = question as IMultipleChoiceQuestion;
-        group[question.id] = this.fb.group({
-          values: [multipleChoiceQuestion.values],
-          choices: [multipleChoiceQuestion.choices]
-        });
-      }
-      if (typeName === "multipleNestedChoice") {
-        const multipleNestedChoiceQuestion = question as IMultipleNestedChoiceQuestion;
-        group[question.id] = this.fb.group({
-          values: [multipleNestedChoiceQuestion.values],
-          choices: [multipleNestedChoiceQuestion.choices]
-        });
+      switch (this.getType(question)) {
+        case ControlType.MinMax: {
+          const minMaxQuestion = question as IMinMaxQuestion;
+          group[question.id] = this.fb.group({
+            min: minMaxQuestion.choosedMin,
+            max: minMaxQuestion.choosedMax
+          });
+          break;
+        }
+        case ControlType.MultipleChoice: {
+          const multipleChoiceQuestion = question as IMultipleChoiceQuestion;
+          group[question.id] = this.fb.group({
+            values: [multipleChoiceQuestion.values],
+            choices: [multipleChoiceQuestion.choices]
+          });
+          break;
+        }
+        case ControlType.MultipleNestedChoice: {
+          const multipleChoiceQuestion = question as IMultipleChoiceQuestion;
+          group[question.id] = this.fb.group({
+            values: [multipleChoiceQuestion.values],
+            choices: [multipleChoiceQuestion.choices]
+          });
+          break;
+        }
       }
     });
     return group;
@@ -159,5 +163,11 @@ export class SurveyStepperComponent implements OnInit {
 export class Step {
   questionId: number;
   name: string;
-  kind: string;
+  controlType: ControlType;
+}
+
+export enum ControlType {
+  MinMax,
+  MultipleNestedChoice,
+  MultipleChoice
 }

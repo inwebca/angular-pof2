@@ -1,14 +1,14 @@
 <form [formGroup]="formGroup">
   <mat-horizontal-stepper #stepper>
-    <mat-step *ngFor="let step of steps; let i = index;" [ngSwitch]="step.kind">
+    <mat-step *ngFor="let step of steps; let i = index;" [ngSwitch]="step.controlType">
       <ng-template matStepLabel>{{i+1}}</ng-template>
-      <min-max-component *ngSwitchCase="'minMax'" [group]="getGroup(step.questionId)" [question]="step.name">
+      <min-max-component *ngSwitchCase="ControlType.MinMax" [group]="getGroup(step.questionId)" [question]="step.name">
       </min-max-component>
-      <multiple-choice-component *ngSwitchCase="'multipleChoice'" [group]="getGroup(step.questionId)"
+      <multiple-choice-component *ngSwitchCase="ControlType.MultipleChoice" [group]="getGroup(step.questionId)"
         [question]="step.name">
       </multiple-choice-component>
-      <multiple-nested-choice-component *ngSwitchCase="'multipleNestedChoice'" [group]="getGroup(step.questionId)"
-        [question]="step.name">
+      <multiple-nested-choice-component *ngSwitchCase="ControlType.MultipleNestedChoice"
+        [group]="getGroup(step.questionId)" [question]="step.name">
       </multiple-nested-choice-component>
     </mat-step>
     <mat-step>
