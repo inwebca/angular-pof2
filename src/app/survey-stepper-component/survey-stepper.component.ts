@@ -28,6 +28,10 @@ export class SurveyStepperComponent implements OnInit {
     return this.formGroup.get("multipleChoice") as FormGroup;
   }
 
+  get multipleNestedChoice() {
+    return this.formGroup.get("multipleNestedChoice") as FormGroup;
+  }
+
   ngOnInit() {
     this.steps = this.data.questions.map(
       question =>
