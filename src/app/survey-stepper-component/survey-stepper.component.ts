@@ -82,6 +82,7 @@ export class SurveyStepperComponent implements OnInit {
         }
       }
     });
+    console.log(this.formGroup);
   }
 
   getType(question: IQuestion) {
