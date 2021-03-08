@@ -78,12 +78,13 @@ export class SurveyStepperComponent implements OnInit {
       //     });
       //   }
       // });
-      let test1 = values;
-      let test = Object.entries(values);
-      let test2 = Object.values(values);
-      console.log(test1);
-      console.log(test);
-      console.log(test2);
+      let valuesObj = Object.entries(values);
+
+      var controls = Object.entries(values).map(([key, control]) => ({
+        id: parseInt(key),
+        control: control,
+        controlType: this.getControlType(control)
+      }));
     });
   }
 
@@ -139,6 +140,16 @@ export class SurveyStepperComponent implements OnInit {
       }
     });
     return group;
+  }
+
+  getControlType(control: any) {
+    debugger;
+    if (control.hasOwnProperty("min")) {
+      return "multipleChoice";
+    }
+    if (control.hasOwnProperty("choices")) {
+      return "multipleChoice";
+    }
   }
 }
 
