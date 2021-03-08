@@ -43,48 +43,50 @@ export class SurveyStepperComponent implements OnInit {
     let groups = this.createFormGroup(this.data.questions);
     this.formGroup = new FormGroup(groups);
 
-    Object.keys(this.formGroup.controls).forEach(key => {
-      const group = this.formGroup.controls[key] as FormGroup;
-      if (group.contains("min")) {
-        this.formChoices.minMaxChoices.push({
-          id: parseInt(key),
-          min: group.get("min").value,
-          max: group.get("max").value
-        });
-      }
-      if (group.contains("choices")) {
-        this.formChoices.multipleChoices.push({
-          id: parseInt(key),
-          choice: group.get("choices").value
-        });
-      }
-    });
+    // Object.keys(this.formGroup.controls).forEach(key => {
+    //   const group = this.formGroup.controls[key] as FormGroup;
+    //   if (group.contains("min")) {
+    //     this.formChoices.minMaxChoices.push({
+    //       id: parseInt(key),
+    //       min: group.get("min").value,
+    //       max: group.get("max").value
+    //     });
+    //   }
+    //   if (group.contains("choices")) {
+    //     this.formChoices.multipleChoices.push({
+    //       id: parseInt(key),
+    //       choice: group.get("choices").value
+    //     });
+    //   }
+    // });
 
     this.formGroup.valueChanges.subscribe(values => {
-      // let keys = Object.keys(values);
-      // keys.forEach(key => {
-      //   const group = this.formGroup.controls[key] as FormGroup;
-      //   if (group.contains("min")) {
-      //     this.formChoices.minMaxChoices.push({
-      //       id: parseInt(key),
-      //       min: group.get("min").value,
-      //       max: group.get("max").value
-      //     });
-      //   }
-      //   if (group.contains("choices")) {
-      //     this.formChoices.multipleChoices.push({
-      //       id: parseInt(key),
-      //       choice: group.get("choices").value
-      //     });
-      //   }
-      // });
-      let valuesObj = Object.entries(values);
+      this.formChoices.minMaxChoices = [];
+      this.formChoices.multipleChoices = [];
 
       var controls = Object.entries(values).map(([key, control]) => ({
         id: parseInt(key),
-        control: control,
+        controlMinMax: control as MinMaxChoice,
+        controlMultiple: control as MultipleChoice,
         controlType: this.getControlType(control)
       }));
+
+      controls.forEach(item => {
+        if (item.controlType === "minMaxChoice") {
+          this.formChoices.minMaxChoices.push({
+            id: item.id,
+            min: item.controlMinMax.min,
+            max: item.controlMinMax.max
+          });
+        }
+        if (item.controlType === "multipleChoice") {
+          console.log(item.controlMultiple.choices);
+          this.formChoices.multipleChoices.push({
+            id: item.id,
+            choices: item.controlMultiple.choices
+          });
+        }
+      });
     });
   }
 
@@ -143,9 +145,8 @@ export class SurveyStepperComponent implements OnInit {
   }
 
   getControlType(control: any) {
-    debugger;
     if (control.hasOwnProperty("min")) {
-      return "multipleChoice";
+      return "minMaxChoice";
     }
     if (control.hasOwnProperty("choices")) {
       return "multipleChoice";
@@ -161,7 +162,7 @@ export interface DriverSurveyChoices {
 
 export interface MultipleChoice {
   id: number;
-  choice: Array<number>;
+  choices: Array<number>;
 }
 
 export interface MinMaxChoice {
