@@ -62,11 +62,9 @@ export class SurveyStepperComponent implements OnInit {
     console.log(this.formChoices);
 
     this.formGroup.valueChanges.subscribe(values => {
+      debugger;
       const test = <Array<any>>values;
-      test.forEach(t => {
-        console.log(t);
-      });
-      console.log(test);
+      debugger;
     });
   }
 
