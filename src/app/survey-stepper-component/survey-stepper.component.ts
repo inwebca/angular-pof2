@@ -61,12 +61,29 @@ export class SurveyStepperComponent implements OnInit {
     });
 
     this.formGroup.valueChanges.subscribe(values => {
-      console.log(values);
-      debugger;
-      let vals = values as Array<any>;
-      // vals.forEach(value => {
-      //   console.log(value);
+      // let keys = Object.keys(values);
+      // keys.forEach(key => {
+      //   const group = this.formGroup.controls[key] as FormGroup;
+      //   if (group.contains("min")) {
+      //     this.formChoices.minMaxChoices.push({
+      //       id: parseInt(key),
+      //       min: group.get("min").value,
+      //       max: group.get("max").value
+      //     });
+      //   }
+      //   if (group.contains("choices")) {
+      //     this.formChoices.multipleChoices.push({
+      //       id: parseInt(key),
+      //       choice: group.get("choices").value
+      //     });
+      //   }
       // });
+      let test1 = values;
+      let test = Object.entries(values);
+      let test2 = Object.values(values);
+      console.log(test1);
+      console.log(test);
+      console.log(test2);
     });
   }
 
